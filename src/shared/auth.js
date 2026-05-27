@@ -1,20 +1,54 @@
+/* global Office */
+const { PublicClientNext } = require('@azure/msal-browser');
+const CONFIG = require('./config');
+
 /**
- * SSO-Token über Office.auth holen.
- * Funktioniert auf Desktop, OWA und Mac ohne Login-Prompt,
- * da der bereits eingeloggte M365-User genutzt wird.
+ * Graph-Scopes, für die wir Tokens anfordern.
+ * Müssen mit den Azure AD App-Berechtigungen übereinstimmen.
+ */
+const GRAPH_SCOPES = [
+    'https://graph.microsoft.com/User.Read',
+    'https://graph.microsoft.com/Sites.Read.All'
+];
+
+// Singleton-Initialisierung: MSAL nur einmal aufbauen
+let _msalPromise = null;
+
+function getMsalInstance() {
+    if (!_msalPromise) {
+        _msalPromise = PublicClientNext.createPublicClientApplication({
+            auth: {
+                clientId: CONFIG.clientId,
+                // 'organizations' = nur Work/School-Accounts (kein persönliches Microsoft-Konto)
+                authority: 'https://login.microsoftonline.com/organizations',
+                // Nested App Auth: MSAL nutzt den Office-Kontext für SSO,
+                // kein Popup, kein Redirect nötig
+                supportsNestedAppAuth: true
+            }
+        });
+    }
+    return _msalPromise;
+}
+
+/**
+ * Graph-Zugriffstoken holen.
+ * Nutzt NAA (Nested App Auth) – läuft silent, da der User bereits
+ * in Office/OWA eingeloggt ist.
  */
 async function getAccessToken() {
+    const msal = await getMsalInstance();
+
+    const accounts = msal.getAllAccounts();
+    const tokenRequest = {
+        scopes: GRAPH_SCOPES,
+        account: accounts.length > 0 ? accounts[0] : undefined
+    };
+
     try {
-        const token = await Office.auth.getAccessToken({
-            allowSignInPrompt: false,
-            allowConsentPrompt: false,
-            forMSGraphAccess: true
-        });
-        return token;
+        const result = await msal.acquireTokenSilent(tokenRequest);
+        return result.accessToken;
     } catch (err) {
-        // Fehlercode 13003: Nutzer nicht eingeloggt / SSO nicht möglich
-        // Fehlercode 13005: App nicht in Azure AD registriert
-        console.error('SSO-Fehler (Code ' + err.code + '):', err.message);
+        console.error('MSAL Token-Fehler (' + (err.errorCode || err.name) + '):', err.message);
         throw err;
     }
 }

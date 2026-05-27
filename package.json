@@ -8,6 +8,7 @@
     "start": "webpack serve --mode development"
   },
   "dependencies": {
+    "@azure/msal-browser": "^3.30.0",
     "@microsoft/office-js": "^1.1.0"
   },
   "devDependencies": {

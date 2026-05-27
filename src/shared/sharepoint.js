@@ -1,29 +1,28 @@
 const { getAccessToken } = require('./auth');
 const CONFIG = require('./config');
 
+// Aus config.js ableiten:
+// sharepointSiteUrl: 'https://fuchsag.sharepoint.com'  → Hostname: 'fuchsag.sharepoint.com'
+// signaturesLibraryPath: '/FUCHSSignaturen'             → Bibliotheksname: 'FUCHSSignaturen'
+const SITE_HOSTNAME  = new URL(CONFIG.sharepointSiteUrl).hostname;
+const LIBRARY_NAME   = CONFIG.signaturesLibraryPath.replace(/^\//, '');
+
 /**
- * Lädt eine Signatur-HTML-Datei aus der SharePoint-Bibliothek.
+ * Lädt eine Signatur-HTML-Datei aus der SharePoint-Bibliothek via Microsoft Graph.
  *
- * @param {string} relativePath  z.B. 'personal/fuchs-ag.de.html'
- *                               oder 'shared/service@fuchs-cranes.de.html'
+ * Graph-Endpoint:
+ *   GET /sites/{hostname}/lists/{library}/drive/root:/{path}:/content
+ *
+ * @param {string} relativePath  z.B. 'personal/fuchs-cranes.de.html'
  * @returns {string|null}        HTML-Inhalt oder null wenn nicht gefunden
  */
 async function fetchSignatureTemplate(relativePath) {
     const token = await getAccessToken();
 
-    // SharePoint REST API: Dateiinhalt direkt abrufen
-    // Beispiel: /FUCHSSignaturen/personal/fuchs-ag.de.html
-    const serverRelativeUrl =
-        CONFIG.signaturesLibraryPath + '/' + relativePath;
-
-    // encodeURIComponent kodiert den Slash – stattdessen nur Sonderzeichen kodieren
-    const encodedPath = serverRelativeUrl.replace(/'/g, "''");
-
     const apiUrl =
-        CONFIG.sharepointSiteUrl +
-        "/_api/web/GetFileByServerRelativeUrl('" +
-        encodedPath +
-        "')/$value";
+        'https://graph.microsoft.com/v1.0/sites/' + SITE_HOSTNAME +
+        '/lists/' + encodeURIComponent(LIBRARY_NAME) +
+        '/drive/root:/' + relativePath + ':/content';
 
     const response = await fetch(apiUrl, {
         headers: {
@@ -38,7 +37,7 @@ async function fetchSignatureTemplate(relativePath) {
     }
 
     if (!response.ok) {
-        throw new Error('SharePoint Fehler: ' + response.status + ' für ' + relativePath);
+        throw new Error('Graph/SharePoint Fehler: ' + response.status + ' für ' + relativePath);
     }
 
     return response.text();
