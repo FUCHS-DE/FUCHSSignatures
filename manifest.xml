@@ -100,10 +100,10 @@
         <Id>3411d032-43f5-4c9e-a2db-c2e5ee57d732</Id>
         <Resource>api://fuchs-de.github.io/FUCHSSignatures/3411d032-43f5-4c9e-a2db-c2e5ee57d732</Resource>
         <Scopes>
+          <Scope>profile</Scope>
+          <Scope>openid</Scope>
           <Scope>User.Read</Scope>
           <Scope>Sites.Read.All</Scope>
-          <Scope>openid</Scope>
-          <Scope>profile</Scope>
         </Scopes>
       </WebApplicationInfo>
 
