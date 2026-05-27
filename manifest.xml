@@ -42,6 +42,8 @@
 
   <Permissions>ReadWriteMailbox</Permissions>
 
+  <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
+
   <!-- VersionOverrides V1_0: Pflicht-Wrapper, Fallback für ältere Clients -->
   <VersionOverrides
     xmlns="http://schemas.microsoft.com/office/mailappversionoverrides"
@@ -54,11 +56,7 @@
     </Requirements>
 
     <Hosts>
-      <Host xsi:type="MailHost">
-        <DesktopFormFactor>
-          <FunctionFile resid="Commands.Url"/>
-        </DesktopFormFactor>
-      </Host>
+      <Host xsi:type="MailHost"/>
     </Hosts>
 
     <Resources>
@@ -84,12 +82,9 @@
             <FunctionFile resid="Commands.Url"/>
             <ExtensionPoint xsi:type="LaunchEvent">
               <LaunchEvents>
-                <LaunchEvent Type="OnNewMessageCompose"  FunctionName="handleSignature"/>
-                <LaunchEvent Type="OnMessageFromChanged" FunctionName="handleSignature"/>
-                <LaunchEvent Type="OnNewMessageReply"    FunctionName="handleSignature"/>
-                <LaunchEvent Type="OnMessageReplyAll"    FunctionName="handleSignature"/>
-                <LaunchEvent Type="OnMessageForward"     FunctionName="handleSignature"/>
+                <LaunchEvent Type="OnNewMessageCompose" FunctionName="handleSignature"/>
               </LaunchEvents>
+              <SourceLocation resid="Commands.Url"/>
             </ExtensionPoint>
           </DesktopFormFactor>
         </Host>
