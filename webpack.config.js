@@ -22,7 +22,7 @@ module.exports = {
         new CopyPlugin({
             patterns: [
                 { from: 'manifest.xml', to: 'manifest.xml' },
-                { from: 'assets',       to: 'assets'       }
+                { from: 'assets', to: 'assets', noErrorOnMissing: true }
             ]
         })
     ],
