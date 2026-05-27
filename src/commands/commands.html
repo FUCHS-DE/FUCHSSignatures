@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!--
+    office.js MUSS vor commands.bundle.js geladen werden.
+    Deshalb inject: false in webpack und manuell hier eingebunden.
+  -->
+  <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+  <script type="text/javascript" src="commands.bundle.js"></script>
+</head>
+<body>
+  <!-- Keine sichtbare UI – nur Event-Handler -->
+</body>
+</html>
