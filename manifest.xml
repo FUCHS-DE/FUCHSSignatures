@@ -83,13 +83,25 @@
             <Runtime resid="CommandsUrl" lifetime="short"/>
           </Runtimes>
           <DesktopFormFactor>
+            <FunctionFile resid="CommandsUrl"/>
             <ExtensionPoint xsi:type="LaunchEvent">
               <LaunchEvents>
                 <LaunchEvent Type="OnNewMessageCompose" FunctionName="handleSignature"/>
+                <LaunchEvent Type="OnMessageFromChanged" FunctionName="handleSignature"/>
               </LaunchEvents>
               <SourceLocation resid="CommandsUrl"/>
             </ExtensionPoint>
           </DesktopFormFactor>
+          <MobileFormFactor>
+            <FunctionFile resid="CommandsUrl"/>
+            <ExtensionPoint xsi:type="LaunchEvent">
+              <LaunchEvents>
+                <LaunchEvent Type="OnNewMessageCompose" FunctionName="handleSignature"/>
+                <!-- OnMessageFromChanged wird auf Mobile nicht unterstützt (ab Mailbox 1.11, nur Desktop/Mac/OWA) -->
+              </LaunchEvents>
+              <SourceLocation resid="CommandsUrl"/>
+            </ExtensionPoint>
+          </MobileFormFactor>
         </Host>
       </Hosts>
 
