@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <OfficeApp
   xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -44,7 +44,7 @@
 
   <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
 
-  <!-- VersionOverrides V1_0: Pflicht-Wrapper, Fallback für ältere Clients -->
+  <!-- VersionOverrides V1_0: Pflicht-Wrapper, Fallback fÃ¼r Ã¤ltere Clients -->
   <VersionOverrides
     xmlns="http://schemas.microsoft.com/office/mailappversionoverrides"
     xsi:type="VersionOverridesV1_0">
@@ -95,18 +95,8 @@
         </bt:Urls>
       </Resources>
 
-      <WebApplicationInfo>
-        <Id>3411d032-43f5-4c9e-a2db-c2e5ee57d732</Id>
-        <Resource>api://fuchs-de.github.io/FUCHSSignatures/3411d032-43f5-4c9e-a2db-c2e5ee57d732</Resource>
-        <Scopes>
-          <Scope>profile</Scope>
-          <Scope>openid</Scope>
-          <Scope>User.Read</Scope>
-          <Scope>Sites.Read.All</Scope>
-        </Scopes>
-      </WebApplicationInfo>
-
     </VersionOverrides>
   </VersionOverrides>
 
 </OfficeApp>
+
