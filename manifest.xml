@@ -14,7 +14,7 @@
 
   <IconUrl DefaultValue="https://fuchs-de.github.io/FUCHSSignatures/assets/icon-80.png"/>
   <HighResolutionIconUrl DefaultValue="https://fuchs-de.github.io/FUCHSSignatures/assets/icon-80.png"/>
-  <SupportUrl DefaultValue="https://fuchs-de.github.io/FUCHSSignatures"/>
+  <SupportUrl DefaultValue="https://github.com/FUCHS-DE/FUCHSSignatures"/>
 
   <AppDomains>
     <AppDomain>https://fuchs-de.github.io</AppDomain>
@@ -28,12 +28,10 @@
 
   <Requirements>
     <Sets>
-      <!-- Mailbox 1.10 = Mindestanforderung für setSignatureAsync -->
       <Set Name="Mailbox" MinVersion="1.10"/>
     </Sets>
   </Requirements>
 
-  <!-- Pflichtfeld, wird durch VersionOverrides überschrieben -->
   <FormSettings>
     <Form xsi:type="ItemEdit">
       <DesktopSettings>
@@ -44,10 +42,32 @@
 
   <Permissions>ReadWriteMailbox</Permissions>
 
-  <!-- VersionOverrides: Event-based Activation -->
+  <!-- VersionOverrides V1_0: Pflicht-Wrapper, Fallback für ältere Clients -->
   <VersionOverrides
     xmlns="http://schemas.microsoft.com/office/mailappversionoverrides"
     xsi:type="VersionOverridesV1_0">
+
+    <Requirements>
+      <bt:Sets>
+        <bt:Set Name="Mailbox" MinVersion="1.10"/>
+      </bt:Sets>
+    </Requirements>
+
+    <Hosts>
+      <Host xsi:type="MailHost">
+        <DesktopFormFactor>
+          <FunctionFile resid="Commands.Url"/>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+
+    <Resources>
+      <bt:Urls>
+        <bt:Url id="Commands.Url" DefaultValue="https://fuchs-de.github.io/FUCHSSignatures/commands.html"/>
+      </bt:Urls>
+    </Resources>
+
+    <!-- VersionOverrides V1_1: Event-based Activation -->
     <VersionOverrides
       xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
       xsi:type="VersionOverridesV1_1">
@@ -61,24 +81,16 @@
       <Hosts>
         <Host xsi:type="MailHost">
           <DesktopFormFactor>
-
             <FunctionFile resid="Commands.Url"/>
-
-            <!-- Event-based Activation:
-                 Feuert automatisch ohne Nutzerinteraktion -->
             <ExtensionPoint xsi:type="LaunchEvent">
               <LaunchEvents>
-                <!-- Neue Mail -->
                 <LaunchEvent Type="OnNewMessageCompose"  FunctionName="handleSignature"/>
-                <!-- Absender wird geändert → Signatur sofort tauschen -->
                 <LaunchEvent Type="OnMessageFromChanged" FunctionName="handleSignature"/>
-                <!-- Antwort / Weiterleitung -->
                 <LaunchEvent Type="OnNewMessageReply"    FunctionName="handleSignature"/>
                 <LaunchEvent Type="OnMessageReplyAll"    FunctionName="handleSignature"/>
                 <LaunchEvent Type="OnMessageForward"     FunctionName="handleSignature"/>
               </LaunchEvents>
             </ExtensionPoint>
-
           </DesktopFormFactor>
         </Host>
       </Hosts>
@@ -89,7 +101,6 @@
         </bt:Urls>
       </Resources>
 
-      <!-- SSO: muss zur Application ID URI in Azure AD passen -->
       <WebApplicationInfo>
         <Id>3411d032-43f5-4c9e-a2db-c2e5ee57d732</Id>
         <Resource>api://fuchs-de.github.io/FUCHSSignatures/3411d032-43f5-4c9e-a2db-c2e5ee57d732</Resource>
