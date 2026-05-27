@@ -13,16 +13,14 @@
   <DisplayName DefaultValue="FUCHS Signatur"/>
   <Description DefaultValue="Zentralisierte Signaturen je Absender und Mandant"/>
 
-  <!-- Icons: Pfade anpassen nach Deployment -->
-  <IconUrl DefaultValue="https://YOUR_HOST/assets/icon-80.png"/>
-  <HighResolutionIconUrl DefaultValue="https://YOUR_HOST/assets/icon-80.png"/>
-  <SupportUrl DefaultValue="https://YOUR_HOST"/>
+  <IconUrl DefaultValue="https://fuchs-de.github.io/FUCHSSignatures/assets/icon-80.png"/>
+  <HighResolutionIconUrl DefaultValue="https://fuchs-de.github.io/FUCHSSignatures/assets/icon-80.png"/>
+  <SupportUrl DefaultValue="https://fuchs-de.github.io/FUCHSSignatures"/>
 
   <AppDomains>
-    <AppDomain>https://YOUR_HOST</AppDomain>
+    <AppDomain>https://fuchs-de.github.io</AppDomain>
     <AppDomain>https://graph.microsoft.com</AppDomain>
-    <!-- SharePoint-Domain eintragen, z.B.: -->
-    <!-- <AppDomain>https://fuchs-ag.sharepoint.com</AppDomain> -->
+    <AppDomain>https://fuchsag.sharepoint.com</AppDomain>
   </AppDomains>
 
   <Hosts>
@@ -40,7 +38,7 @@
   <FormSettings>
     <Form xsi:type="ItemEdit">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://YOUR_HOST/commands.html"/>
+        <SourceLocation DefaultValue="https://fuchs-de.github.io/FUCHSSignatures/commands.html"/>
       </DesktopSettings>
     </Form>
   </FormSettings>
@@ -65,7 +63,6 @@
         <Host xsi:type="MailHost">
           <DesktopFormFactor>
 
-            <!-- Die HTML-Datei, die das JS lädt -->
             <FunctionFile resid="Commands.Url"/>
 
             <!-- Event-based Activation:
@@ -89,9 +86,21 @@
 
       <Resources>
         <bt:Urls>
-          <bt:Url id="Commands.Url" DefaultValue="https://YOUR_HOST/commands.html"/>
+          <bt:Url id="Commands.Url" DefaultValue="https://fuchs-de.github.io/FUCHSSignatures/commands.html"/>
         </bt:Urls>
       </Resources>
+
+      <!-- SSO: muss zur Application ID URI in Azure AD passen -->
+      <WebApplicationInfo>
+        <Id>3411d032-43f5-4c9e-a2db-c2e5ee57d732</Id>
+        <Resource>api://fuchs-de.github.io/FUCHSSignatures/3411d032-43f5-4c9e-a2db-c2e5ee57d732</Resource>
+        <Scopes>
+          <Scope>User.Read</Scope>
+          <Scope>Sites.Read.All</Scope>
+          <Scope>openid</Scope>
+          <Scope>profile</Scope>
+        </Scopes>
+      </WebApplicationInfo>
 
     </VersionOverrides>
   </VersionOverrides>

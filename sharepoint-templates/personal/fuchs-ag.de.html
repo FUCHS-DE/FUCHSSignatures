@@ -1,0 +1,28 @@
+<!--
+  Persönliches Template für Mandant: fuchs-ag.de
+  Platzhalter werden vom Add-in durch echte Nutzerdaten ersetzt.
+  Diese Datei liegt in SharePoint unter: /Signaturen/personal/fuchs-ag.de.html
+-->
+<table style="border:0; border-collapse:collapse; font-family:Arial,sans-serif; font-size:11pt; color:#1a1a1a;">
+  <tr>
+    <!-- Logo -->
+    <td style="padding-right:16px; vertical-align:top; border-right:2px solid #003366;">
+      <img src="https://YOUR_TENANT.sharepoint.com/sites/Signaturen/Signaturen/assets/logo-fuchs-ag.png"
+           alt="FUCHS AG" width="120" style="display:block;">
+    </td>
+    <!-- Nutzerdaten -->
+    <td style="padding-left:16px; vertical-align:top;">
+      <p style="margin:0; font-weight:bold; font-size:12pt; color:#003366;">{{displayName}}</p>
+      <p style="margin:2px 0 0 0; color:#555555;">{{jobTitle}}</p>
+      <p style="margin:6px 0 0 0; color:#555555;">{{department}}</p>
+      <p style="margin:8px 0 0 0;">
+        <span style="color:#003366;">T</span>&nbsp;{{phone}}<br>
+        <span style="color:#003366;">M</span>&nbsp;{{mobilePhone}}<br>
+        <a href="mailto:{{email}}" style="color:#003366; text-decoration:none;">{{email}}</a>
+      </p>
+      <p style="margin:8px 0 0 0; font-size:9pt; color:#888888;">
+        FUCHS AG · Musterstraße 1 · 12345 Musterstadt
+      </p>
+    </td>
+  </tr>
+</table>
