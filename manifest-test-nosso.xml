@@ -83,7 +83,7 @@
               <LaunchEvents>
                 <LaunchEvent Type="OnNewMessageCompose" FunctionName="handleSignature"/>
               </LaunchEvents>
-              <SourceLocation DefaultValue="https://fuchs-de.github.io/FUCHSSignatures/commands.html"/>
+              <SourceLocation resid="Commands.Url"/>
             </ExtensionPoint>
           </DesktopFormFactor>
         </Host>
