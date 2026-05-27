@@ -61,13 +61,14 @@
 
     <Resources>
       <bt:Urls>
-        <bt:Url id="Commands.Url" DefaultValue="https://fuchs-de.github.io/FUCHSSignatures/commands.html"/>
+        <bt:Url id="CommandsUrl" DefaultValue="https://fuchs-de.github.io/FUCHSSignatures/commands.html"/>
       </bt:Urls>
     </Resources>
 
     <!-- VersionOverrides V1_1: Event-based Activation -->
     <VersionOverrides
       xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
+      xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
       xsi:type="VersionOverridesV1_1">
 
       <Requirements>
@@ -78,12 +79,15 @@
 
       <Hosts>
         <Host xsi:type="MailHost">
+          <Runtimes>
+            <Runtime resid="CommandsUrl" lifetime="short"/>
+          </Runtimes>
           <DesktopFormFactor>
             <ExtensionPoint xsi:type="LaunchEvent">
               <LaunchEvents>
                 <LaunchEvent Type="OnNewMessageCompose" FunctionName="handleSignature"/>
               </LaunchEvents>
-              <SourceLocation resid="Commands.Url"/>
+              <SourceLocation resid="CommandsUrl"/>
             </ExtensionPoint>
           </DesktopFormFactor>
         </Host>
@@ -91,7 +95,7 @@
 
       <Resources>
         <bt:Urls>
-          <bt:Url id="Commands.Url" DefaultValue="https://fuchs-de.github.io/FUCHSSignatures/commands.html"/>
+          <bt:Url id="CommandsUrl" DefaultValue="https://fuchs-de.github.io/FUCHSSignatures/commands.html"/>
         </bt:Urls>
       </Resources>
 
